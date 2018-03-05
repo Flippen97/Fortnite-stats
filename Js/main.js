@@ -1,38 +1,47 @@
-/*
-    const weatherInfoElement = document.getElementById('FortniteDiv');
-    let weatherInfo = `
-    <p> ${weatherData.weather[0].description} </p>
-    <p> ${weatherData.main.temp} </p>
-    `;
-    weatherInfoElement.insertAdjacentHTML('afterbegin', weatherInfo);
-*/
 var mykey = apiKey.MY_KEY;
 
 function fetchStats(){
-  fetch('https://cors-anywhere.herokuapp.com/https://api.fortnitetracker.com/v1/profile/pc/ziper240', {
+  fetch(`https://cors-anywhere.herokuapp.com/https://api.fortnitetracker.com/v1/profile/pc/ziper240`, {
     headers: {
       'TRN-Api-Key': mykey
     }
   })
-  .then(function(response){
-    return response.json();
-  })
-  .then(function(fortniteData) {
+  .then((response) => response.json())
+  .then((fortniteData) => {
     console.log(fortniteData);
-    displayFortniteData(fortniteData);
+    //displayFortniteData(fortniteData);
+    displayFortnite(fortniteData);
   })
-  .catch(function(error) {
+  .catch((error) => {
       console.log(error);
   })
 }
 
 fetchStats();
 
-function displayFortniteData(fortniteData){
+/*function displayFortniteData(fortniteData){
  const displayFortniteInfo = document.getElementById('FortniteDiv');
     let FortniteInfo = `
     <p> ${fortniteData.epicUserHandle} </p>
-    <p> ${fortniteData.lifeTimeStats[0].key} </p>
     `;
-    displayFortniteInfo.insertAdjacentHTML('afterbegin', FortniteInfo);
+    displayFortniteInfo.innerHTML += FortniteInfo;
+};*/
+
+function displayFortnite(fortniteData){
+ const displayFortnite = document.getElementById('FortniteDiv');
+    const lifeTimeStats = fortniteData.lifeTimeStats
+var FortniteInfo = `
+    <p> ${fortniteData.epicUserHandle} </p>
+    <div class="grid-container">
+    `;
+    for (i = 0; i < lifeTimeStats.length; i++) {
+        FortniteInfo += `
+        <div class="grid-item">
+            <span> ${lifeTimeStats[i].key}</span><br>
+            <span>${lifeTimeStats[i].value}</span>
+        </div>`;
+    }
+    FortniteInfo += `</div>`;
+        
+    displayFortnite.innerHTML += FortniteInfo;
 };
