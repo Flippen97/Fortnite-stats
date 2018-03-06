@@ -1,33 +1,36 @@
+var url = `https://cors-anywhere.herokuapp.com/https://api.fortnitetracker.com/v1/profile/`;
 var mykey = apiKey.MY_KEY;
+var person1Name = "ziper240";
+var person1Platform = "pc";
+var person2Name = "OlstedT";
+var person2Platform = "pc";
 
 function fetchStats(){
-  fetch(`https://cors-anywhere.herokuapp.com/https://api.fortnitetracker.com/v1/profile/pc/ziper240`, {
-    headers: {
-      'TRN-Api-Key': mykey
-    }
-  })
-  .then((response) => response.json())
-  .then((fortniteData) => {
-    console.log(fortniteData);
-    //displayFortniteData(fortniteData);
-    displayFortnite(fortniteData);
-  })
-  .catch((error) => {
-      console.log(error);
-  })
+    
+  var comparePlayers = [];
+    
+  const player1 = fetch(`https://cors-anywhere.herokuapp.com/https://api.fortnitetracker.com/v1/profile/pc/ziper240`, {
+    headers: { 'TRN-Api-Key': mykey }
+  }).then((response) => response.json())
+    
+    comparePlayers.push(player1);
+    
+  const player2 = fetch(`https://cors-anywhere.herokuapp.com/https://api.fortnitetracker.com/v1/profile/pc/OlstedT`, {
+    headers: { 'TRN-Api-Key': mykey }
+  }).then((response) => response.json())
+    
+    comparePlayers.push(player2);
+
+    Promise.all(comparePlayers)
+        .then((allPeople) => {
+          console.log(allPeople);
+        })
 }
 
 fetchStats();
 
-/*function displayFortniteData(fortniteData){
- const displayFortniteInfo = document.getElementById('FortniteDiv');
-    let FortniteInfo = `
-    <p> ${fortniteData.epicUserHandle} </p>
-    `;
-    displayFortniteInfo.innerHTML += FortniteInfo;
-};*/
-
-function displayFortnite(fortniteData){
+function displayPlayer1(fortniteData){
+    compare.push(fortniteData);
  const displayFortnite = document.getElementById('FortniteDiv');
     const lifeTimeStats = fortniteData.lifeTimeStats
 var FortniteInfo = `
@@ -44,4 +47,5 @@ var FortniteInfo = `
     FortniteInfo += `</div>`;
         
     displayFortnite.innerHTML += FortniteInfo;
+    console.log(compare);
 };
