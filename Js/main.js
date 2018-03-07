@@ -4,6 +4,7 @@ var person1Name = "ziper240";
 var person1Platform = "pc";
 var person2Name = "OlstedT";
 var person2Platform = "pc";
+var bothPlayersArray = [];
 
 function fetchStats(){
     
@@ -22,15 +23,17 @@ function fetchStats(){
     comparePlayers.push(player2);
 
     Promise.all(comparePlayers)
-        .then((allPeople) => {
-          console.log(allPeople);
+        .then((bothPlayers) => {
+            bothPlayersArray.push(bothPlayers);
+            //function listPlayerStats();
+            console.log(bothPlayersArray);
         })
 }
 
 fetchStats();
 
 function displayPlayer1(fortniteData){
-    compare.push(fortniteData);
+    
  const displayFortnite = document.getElementById('FortniteDiv');
     const lifeTimeStats = fortniteData.lifeTimeStats
 var FortniteInfo = `
