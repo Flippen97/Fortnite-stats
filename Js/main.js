@@ -35,6 +35,7 @@ function fetchStats(player1URL, player2URL) {
 
     Promise.all(comparePlayers)
         .then((bothPlayers) => {
+            bothPlayersArray.length = 0;
             bothPlayersArray.push(bothPlayers);
             listPlayersLifetimeStats();
             console.log(bothPlayersArray);
@@ -45,19 +46,61 @@ function listPlayersLifetimeStats(){
 
     const listOfPlayersLifetimeStats = 
           document.getElementById('listOfPlayersLifetimeStats');
-    const player1 = bothPlayersArray[0][0];
-    const player2 = bothPlayersArray[0][1];
-    console.log(player1);
-    console.log(player2);
+    const player = bothPlayersArray[0];
     
-    var FortniteInfo = `
-
+    function sumTop3_10(player){
+        sum = +player.lifeTimeStats[0].value 
+            + +player.lifeTimeStats[1].value 
+            + +player.lifeTimeStats[2].value;
+        return sum;
+    }
+    
+    function sumTop6_25(player){
+        sum = +player.lifeTimeStats[3].value 
+            + +player.lifeTimeStats[4].value 
+            + +player.lifeTimeStats[5].value;
+        return sum;
+    }
+    
+    let FortniteInfo = '';
+    for (i = 0; i < player.length; i++) {
+    FortniteInfo += `
+        <div class="player${[i + 1]}">
+            <div class="nameAndPlatform">
+                <span class="name">${player[i].epicUserHandle}</span>
+                <span class="platform">${player[i].platformNameLong}</span>
+            </div>
+            <div class="lifetimePlacing">
+                <div class="lifetimeWins">
+                    <p>${player[i].lifeTimeStats[8].value}</p>
+                    <p>${player[i].lifeTimeStats[8].key}</p>
+                </div>
+                <div class="lifetimeTop3-10">
+                    <p>${sumTop3_10(player[i])}</p>
+                    <p>Top3/5/10</p>
+                </div>
+                <div class="lifetimeTop6-25">
+                    <p>${sumTop6_25(player[i])}</p>
+                    <p>Top6/12/25</p>
+                </div>      
+            </div>
+            <div class="lifetimeStats">
+                <p>${player[i].lifeTimeStats[6].key}:</p><p>${player[i].lifeTimeStats[6].value}</p>
+                <p>${player[i].lifeTimeStats[7].key}:</p><p>${player[i].lifeTimeStats[7].value}</p>
+                <p>${player[i].lifeTimeStats[9].key}:</p><p>${player[i].lifeTimeStats[9].value}</p>
+                <p>${player[i].lifeTimeStats[10].key}:</p><p>${player[i].lifeTimeStats[10].value}</p>
+                <p>${player[i].lifeTimeStats[11].key}:</p><p>${player[i].lifeTimeStats[11].value}</p>
+                <p>${player[i].lifeTimeStats[13].key}:</p><p>${player[i].lifeTimeStats[13].value}</p>
+            </div>   
+        </div>
     `;
-    
-    listOfPlayersLifetimeStats.innerHTML += FortniteInfo;
+    }
+    listOfPlayersLifetimeStats.innerHTML = FortniteInfo;
 }
 
-
+function comparePLayerStats(GameMode){
+    
+}
 /*
 function displayPlayer1(fortniteData) {
 
