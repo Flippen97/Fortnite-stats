@@ -1,4 +1,4 @@
-#listOfPlayersLifetimeStats{
+#containerForPlayersLifetimeStats{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     max-width: 800px;
@@ -10,7 +10,7 @@
     padding-top: 10px;
 }
 .player1, .player2{ 
-    background-color: blueviolet;
+    background-color: cadetblue;
 }
 .lifetimePlacing{
     display: grid;
@@ -20,4 +20,17 @@
 .lifetimeStats{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+}
+.player1compare, .player2compare{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+.progressbar{
+    width: 90%;
+    height: 10px;
+    background-color: aqua;
+}
+.progress{
+    height: 10px;
+    background: red;
 }

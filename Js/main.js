@@ -24,12 +24,14 @@ function fetchStats(player1URL, player2URL) {
     const player1 = fetch(player1URL, {
         headers: {'TRN-Api-Key': mykey}
     }).then((response) => response.json())
+    
 
     comparePlayers.push(player1);
 
     const player2 = fetch(player2URL, {
         headers: {'TRN-Api-Key': mykey }
     }).then((response) => response.json())
+   
 
     comparePlayers.push(player2);
 
@@ -38,14 +40,21 @@ function fetchStats(player1URL, player2URL) {
             bothPlayersArray.length = 0;
             bothPlayersArray.push(bothPlayers);
             listPlayersLifetimeStats();
+            comparePLayerStats();
             console.log(bothPlayersArray);
+        })
+        .catch((error) => {
+            if(error == "SyntaxError: Unexpected token < in JSON at position 0"){
+                alert('faaan')
+            }
+            console.log(error);
         })
 }
 
 function listPlayersLifetimeStats(){
-
-    const listOfPlayersLifetimeStats = 
-          document.getElementById('listOfPlayersLifetimeStats');
+    const containerForPlayersLifetimeStats = 
+          document.getElementById('containerForPlayersLifetimeStats');
+    
     const player = bothPlayersArray[0];
     
     function sumTop3_10(player){
@@ -95,30 +104,140 @@ function listPlayersLifetimeStats(){
         </div>
     `;
     }
-    listOfPlayersLifetimeStats.innerHTML = FortniteInfo;
-}
-
-function comparePLayerStats(GameMode){
-    
-}
-/*
-function displayPlayer1(fortniteData) {
-
-    const displayFortnite = document.getElementById('FortniteDiv');
-    const lifeTimeStats = fortniteData.lifeTimeStats
-    var FortniteInfo = `
-    <p> ${fortniteData.epicUserHandle} </p>
-    <div class="grid-container">
+    FortniteInfo += `
+    <select id="sortByGamemode">
+                <option value="p2">Solo</option>
+                <option value="p9">Duo</option>
+                <option value="p10">Squad</option>
+                <option value="curr_p2">S3 Solo</option>
+                <option value="curr_p9">S3 Duo</option>
+                <option value="curr_p10">S3 Squad</option>
+    </select>
     `;
-    for (i = 0; i < lifeTimeStats.length; i++) {
-        FortniteInfo += `
-        <div class="grid-item">
-            <span> ${lifeTimeStats[i].key}</span><br>
-            <span>${lifeTimeStats[i].value}</span>
-        </div>`;
-    }
-    FortniteInfo += `</div>`;
+    
+    containerForPlayersLifetimeStats.innerHTML = FortniteInfo;
+    
+    document.getElementById('sortByGamemode').addEventListener('change', function() {
+        this.selected = this.value;
+        var gamemode = this.value;
+        comparePLayerStats(gamemode);
+    });
+}
 
-    displayFortnite.innerHTML += FortniteInfo;
-    console.log(compare);
-};*/
+function comparePLayerStats(gameMode){
+    const containerForComparePLayerStats = 
+          document.getElementById('containerForComparePLayerStats');
+        var player1 = '';
+        var player2 = '';
+    switch(gameMode) {
+        case "p2":
+            player1 = bothPlayersArray[0][0].stats.p2;
+            player2 = bothPlayersArray[0][1].stats.p2;
+        break;
+        case "p9":
+             player1 = bothPlayersArray[0][0].stats.p9;
+             player2 = bothPlayersArray[0][1].stats.p9;
+        break;
+        case "p10":
+             player1 = bothPlayersArray[0][0].stats.p10;
+             player2 = bothPlayersArray[0][1].stats.p10;
+        break;
+        case "curr_p2":
+             player1 = bothPlayersArray[0][0].stats.curr_p2;
+             player2 = bothPlayersArray[0][1].stats.curr_p2;
+        break;
+        case "curr_p9":
+             player1 = bothPlayersArray[0][0].stats.curr_p9;
+             player2 = bothPlayersArray[0][1].stats.curr_p9;
+        break;
+        case "curr_p10":
+             player1 = bothPlayersArray[0][0].stats.curr_p10;
+             player2 = bothPlayersArray[0][1].stats.curr_p10;
+        break;
+        default:
+            player1 = bothPlayersArray[0][0].stats.p2;
+            player2 = bothPlayersArray[0][1].stats.p2;
+    }
+      
+    let FortniteInfo = ``;
+    FortniteInfo += `
+        <div class="player1compare">
+            <div class="wins">
+                <p>${player1.top1.label}</p>
+                <p>${player1.top1.displayValue}</p>
+                <div class="progressbar">
+                    <div class="progress" style="width: ${100 - +player1.top1.percentile}%;"></div>
+                </div>
+            </div>
+            <div class="winRatio">
+                <p>${player1.winRatio.label}</p>
+                <p>${player1.winRatio.displayValue}</p>
+                <div class="progressbar">
+                    <div class="progress" style="width: ${100 - +player1.winRatio.percentile}%;"></div>
+                </div>
+            </div>
+            <div class="kills">
+                <p>${player1.kills.label}</p>
+                <p>${player1.kills.displayValue}</p>
+                <div class="progressbar">
+                    <div class="progress" style="width: ${100 - +player1.kills.percentile}%;"></div>
+                </div>
+            </div>
+            <div class="kd">
+                <p>${player1.kd.label}</p>
+                <p>${player1.kd.displayValue}</p>
+                <div class="progressbar">
+                    <div class="progress" style="width: ${100 - +player1.kd.percentile}%;"></div>
+                </div>
+            </div>
+            <div class="minutesPlayed">
+                <p>${player1.minutesPlayed.label}</p>
+                <p>${player1.minutesPlayed.displayValue}</p>
+                <div class="progressbar">
+                    <div class="progress" style="width: ${100 - +player1.minutesPlayed.percentile}%;"></div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="player2compare">
+            <div class="wins">
+                <div class="progressbar">
+                    <div class="progress" style="width: ${100 - +player2.top1.percentile}%;"></div>
+                </div>
+                <p>${player2.top1.label}</p>
+                <p>${player2.top1.displayValue}</p>
+            </div>
+            <div class="winRatio">
+                <div class="progressbar">
+                    <div class="progress" style="width: ${100 - +player2.winRatio.percentile}%;"></div>
+                </div>
+                <p>${player2.winRatio.label}</p>
+                <p>${player2.winRatio.displayValue}</p>
+            </div>
+            <div class="kills">
+                <div class="progressbar">
+                    <div class="progress" style="width: ${100 - +player2.kills.percentile}%;"></div>
+                </div>
+                <p>${player2.kills.label}</p>
+                <p>${player2.kills.displayValue}</p>
+            </div>
+            <div class="kd">
+                <div class="progressbar">
+                    <div class="progress" style="width: ${100 - +player2.kd.percentile}%;"></div>
+                </div>
+                <p>${player2.kd.label}</p>
+                <p>${player2.kd.displayValue}</p>
+            </div>
+            <div class="minutesPlayed">
+                <div class="progressbar">
+                    <div class="progress" style="width: ${100 - +player2.minutesPlayed.percentile}%;"></div>
+                </div>
+                <p>${player2.minutesPlayed.label}</p>
+                <p>${player2.minutesPlayed.displayValue}</p>
+            </div>
+        </div>
+    `;
+    
+    containerForComparePLayerStats.innerHTML = FortniteInfo;
+}
+
