@@ -8,32 +8,43 @@
     <link type="text/css" href="css/style.css" rel="stylesheet">
 </head>
 
-<body>
-    <h1>Fortnite CS</h1>
+<body class="">
+    <header>
+        <img src="images/header-Image2.png" class="headerImage">
+    </header>
+    <main>
+        <div class="flashMessage">
+            <div id="errormessage"></div>
+        </div>
+        <div class="enterPlayerDiv">
+           
+            <div class="enterPlayer1">
+            <input id="player1Name" type="text" placeholder="Enter first player" value="dark">
+            <select id="player1Platform">
+                <option value="pc">Pc</option>
+                <option value="xbl">XB1</option>
+                <option value="psn">PS4</option>
+            </select>
+            </div>
+            
+            <div class="enterPlayer2">
+            <input id="player2Name" type="text" placeholder="Enter second player" value="ziper240">
+            <select id="player2Platform">
+                <option value="pc">Pc</option>
+                <option value="xbl">XB1</option>
+                <option value="psn">PS4</option>
+            </select>
+            </div>
+            
+            <button class="btn" id="compareButton">Compare</button>
+        </div>
 
-    <div class="enterPlayerDiv">
-        <input id="player1Name" placeholder="Enter first player" value="dark">
-        <select id="player1Platform">
-            <option value="pc">Pc</option>
-            <option value="xbl">XB1</option>
-            <option value="psn">PS4</option>
-        </select>
+        <div id="containerForPlayersLifetimeStats">
+        </div>
 
-        <input id="player2Name" placeholder="Enter second player" value="ziper240">
-        <select id="player2Platform">
-            <option value="pc">Pc</option>
-            <option value="xbl">XB1</option>
-            <option value="psn">PS4</option>
-        </select>
-       
-        <button class="btn" id="compareButton">Compare</button>
-    </div>
-    
-    <div id="containerForPlayersLifetimeStats">
-    </div>
-    
-    <div id="containerForComparePLayerStats">
-    </div>
+        <div id="containerForComparePLayerStats">
+        </div>
+    </main>
     
     <script type='text/javascript' src='Js/config.js'></script>
     <script type="text/javascript" src="Js/main.js"></script>

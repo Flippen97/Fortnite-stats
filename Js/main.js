@@ -1,6 +1,6 @@
 var url = `https://cors-anywhere.herokuapp.com/https://api.fortnitetracker.com/v1/profile/`;
 var mykey = apiKey.MY_KEY;
-var bothPlayersArray = [];
+
 
 document.getElementById('compareButton').addEventListener('click', getTwoPlayersAndURL);
 
@@ -15,48 +15,59 @@ function getTwoPlayersAndURL(){
     const player2URL = `${url}${player2Platform}/${player2Name}`;   
     
     fetchStats(player1URL, player2URL)
+    loadingScreen();
 }
 
+//fetch two players 
 function fetchStats(player1URL, player2URL) {
     
     var comparePlayers = [];
 
     const player1 = fetch(player1URL, {
         headers: {'TRN-Api-Key': mykey}
-    }).then((response) => response.json())
-    
+    }).then((response) => response.json())    
 
     comparePlayers.push(player1);
 
     const player2 = fetch(player2URL, {
         headers: {'TRN-Api-Key': mykey }
     }).then((response) => response.json())
-   
 
     comparePlayers.push(player2);
 
     Promise.all(comparePlayers)
         .then((bothPlayers) => {
-            bothPlayersArray.length = 0;
+            bothPlayersArray = [];
             bothPlayersArray.push(bothPlayers);
+            console.log(bothPlayersArray);
             listPlayersLifetimeStats();
             comparePLayerStats();
             console.log(bothPlayersArray);
         })
         .catch((error) => {
             if(error == "SyntaxError: Unexpected token < in JSON at position 0"){
-                alert('faaan')
+                errorMessage("Please put in value!");
+            }
+            else if(error == "TypeError: Cannot read property '8' of undefined"){
+                errorMessage("Something went wrong please check players and platform!");
+            }
+            else if(error == "TypeError: Cannot read property 'label' of undefined"){
+                errorMessage("Cannot comapre stats because one or both have missing stats!");
+            }
+            else{
+                errorMessage("Something went wrong!");
             }
             console.log(error);
         })
 }
-
+//list lifetime stats of both players
 function listPlayersLifetimeStats(){
     const containerForPlayersLifetimeStats = 
           document.getElementById('containerForPlayersLifetimeStats');
     
     const player = bothPlayersArray[0];
     
+    //add three stats to show top 3-10 the return the number to diplay
     function sumTop3_10(player){
         sum = +player.lifeTimeStats[0].value 
             + +player.lifeTimeStats[1].value 
@@ -64,6 +75,7 @@ function listPlayersLifetimeStats(){
         return sum;
     }
     
+    //add three stats to show top 6-25 the return the number to diplay
     function sumTop6_25(player){
         sum = +player.lifeTimeStats[3].value 
             + +player.lifeTimeStats[4].value 
@@ -71,9 +83,9 @@ function listPlayersLifetimeStats(){
         return sum;
     }
     
-    let FortniteInfo = '';
-    for (i = 0; i < player.length; i++) {
-    FortniteInfo += `
+    let fortniteInfo = '';
+    for (let i = 0; i < player.length; i++) {
+    fortniteInfo += `
         <div class="player${[i + 1]}">
             <div class="nameAndPlatform">
                 <span class="name">${player[i].epicUserHandle}</span>
@@ -104,7 +116,7 @@ function listPlayersLifetimeStats(){
         </div>
     `;
     }
-    FortniteInfo += `
+    fortniteInfo += `
     <select id="sortByGamemode">
                 <option value="p2">Solo</option>
                 <option value="p9">Duo</option>
@@ -115,8 +127,9 @@ function listPlayersLifetimeStats(){
     </select>
     `;
     
-    containerForPlayersLifetimeStats.innerHTML = FortniteInfo;
+    containerForPlayersLifetimeStats.innerHTML = fortniteInfo;
     
+    //check if the select value has changed and send the new value into the display function
     document.getElementById('sortByGamemode').addEventListener('change', function() {
         this.selected = this.value;
         var gamemode = this.value;
@@ -124,6 +137,7 @@ function listPlayersLifetimeStats(){
     });
 }
 
+//list all the differnt stats that you would like to compare based on select menu above
 function comparePLayerStats(gameMode){
     const containerForComparePLayerStats = 
           document.getElementById('containerForComparePLayerStats');
@@ -159,8 +173,8 @@ function comparePLayerStats(gameMode){
             player2 = bothPlayersArray[0][1].stats.p2;
     }
       
-    let FortniteInfo = ``;
-    FortniteInfo += `
+    let fortniteInfo = ``;
+    fortniteInfo += `
         <div class="player1compare">
             <div class="wins">
                 <p>${player1.top1.label}</p>
@@ -238,6 +252,55 @@ function comparePLayerStats(gameMode){
         </div>
     `;
     
-    containerForComparePLayerStats.innerHTML = FortniteInfo;
+    containerForComparePLayerStats.innerHTML = fortniteInfo;
 }
 
+//Create a spinner icon for when the page is loading
+function loadingScreen(){
+    const containerForPlayersLifetimeStats = 
+          document.getElementById('containerForPlayersLifetimeStats');
+    const containerForComparePLayerStats = 
+          document.getElementById('containerForComparePLayerStats');
+    
+    let loading = `
+    <div class="loadingSpinner"></div>
+    `;
+    let clear = '';
+    containerForPlayersLifetimeStats.innerHTML = loading;
+    containerForComparePLayerStats.innerHTML = clear;
+}
+
+//Change background based on screen width and height
+function checkScreenForbackgroundImg() {
+    var w = window.innerWidth
+    || document.documentElement.clientWidth
+    || document.body.clientWidth;
+
+    var h = window.innerHeight
+    || document.documentElement.clientHeight
+    || document.body.clientHeight;
+    
+    if(w > h){
+        document.body.classList.add("desktopImg");
+            
+    }
+    else{
+        document.body.classList.add("mobileImg");
+    }
+}
+checkScreenForbackgroundImg();
+
+//display an error message for a short time
+function errorMessage(errortext) {
+    var error = document.getElementById('errormessage');
+    error.style.display = 'block';
+    error.classList.add('fadeIn');
+    document.getElementById("errormessage").innerHTML = errortext;
+    setTimeout(function () {
+        error.classList.add('fadeOut');
+        setTimeout(function () {
+            error.style.display = 'none';
+            error.classList.remove("fadeOut");
+        }, 800);
+    }, 4000);
+}
