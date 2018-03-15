@@ -49,7 +49,6 @@ function fetchStats(player1URL, player2URL) {
             bothPlayersArray.push(bothPlayers);
             listPlayersLifetimeStats();
             comparePLayerStats();
-            console.log(bothPlayersArray);
         })
         .catch((error) => {
             if(error == "SyntaxError: Unexpected token < in JSON at position 0"){
@@ -64,7 +63,6 @@ function fetchStats(player1URL, player2URL) {
             else{
                 errorMessage("Something went wrong!");
             }
-            console.log(error);
         })
 }
 //list lifetime stats of both players
