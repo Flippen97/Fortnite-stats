@@ -1,9 +1,17 @@
 var url = `https://cors-anywhere.herokuapp.com/https://api.fortnitetracker.com/v1/profile/`;
 var mykey = apiKey.MY_KEY;
 
+var compareButton = document.getElementById("compareButton");
+compareButton.onclick = function() {
+    compareButton.disabled = true;
+    setTimeout(function() {
+        compareButton.disabled = false;
+    }, 5000);
+    getTwoPlayersAndURL();
+};
+//document.getElementById('compareButton').addEventListener('click', getTwoPlayersAndURL);
 
-document.getElementById('compareButton').addEventListener('click', getTwoPlayersAndURL);
-
+//get API for the fetch request from input fields + url
 function getTwoPlayersAndURL(){
     
     const player1Name = document.getElementById('player1Name').value;
@@ -18,7 +26,7 @@ function getTwoPlayersAndURL(){
     loadingScreen();
 }
 
-//fetch two players 
+//This function get players from API at the same time 
 function fetchStats(player1URL, player2URL) {
     
     var comparePlayers = [];
@@ -39,7 +47,6 @@ function fetchStats(player1URL, player2URL) {
         .then((bothPlayers) => {
             bothPlayersArray = [];
             bothPlayersArray.push(bothPlayers);
-            console.log(bothPlayersArray);
             listPlayersLifetimeStats();
             comparePLayerStats();
             console.log(bothPlayersArray);
@@ -64,6 +71,8 @@ function fetchStats(player1URL, player2URL) {
 function listPlayersLifetimeStats(){
     const containerForPlayersLifetimeStats = 
           document.getElementById('containerForPlayersLifetimeStats');
+    const sortBy = 
+          document.getElementById('sortBy');
     
     const player = bothPlayersArray[0];
     
@@ -116,18 +125,20 @@ function listPlayersLifetimeStats(){
         </div>
     `;
     }
-    fortniteInfo += `
-    <select id="sortByGamemode">
-                <option value="p2">Solo</option>
-                <option value="p9">Duo</option>
-                <option value="p10">Squad</option>
-                <option value="curr_p2">S3 Solo</option>
-                <option value="curr_p9">S3 Duo</option>
-                <option value="curr_p10">S3 Squad</option>
-    </select>
+    select = `
+        <span>Sort by: </span>
+        <select id="sortByGamemode">
+                    <option value="p2">Solo</option>
+                    <option value="p9">Duo</option>
+                    <option value="p10">Squad</option>
+                    <option value="curr_p2">S3 Solo</option>
+                    <option value="curr_p9">S3 Duo</option>
+                    <option value="curr_p10">S3 Squad</option>
+        </select>
     `;
     
     containerForPlayersLifetimeStats.innerHTML = fortniteInfo;
+    sortBy.innerHTML = select;
     
     //check if the select value has changed and send the new value into the display function
     document.getElementById('sortByGamemode').addEventListener('change', function() {
@@ -175,79 +186,89 @@ function comparePLayerStats(gameMode){
       
     let fortniteInfo = ``;
     fortniteInfo += `
-        <div class="player1compare">
-            <div class="wins">
-                <p>${player1.top1.label}</p>
-                <p>${player1.top1.displayValue}</p>
-                <div class="progressbar">
-                    <div class="progress" style="width: ${100 - +player1.top1.percentile}%;"></div>
+        <div class="comparePlayers">
+            <div class="player1compareLabel">
+                <span class="compareName">${bothPlayersArray[0][0].epicUserHandle}</span>
+                <span class="matches">${player1.matches.label}: ${player1.matches.displayValue}</span>
+            </div>
+            <div class="player1compare">
+                <div class="wins">
+                    <p>${player1.top1.label}</p>
+                    <p>${player1.top1.displayValue}</p>
+                    <div class="progressbar">
+                        <div class="progress" style="width: ${100 - +player1.top1.percentile}%;"></div>
+                    </div>
+                </div>
+                <div class="winRatio">
+                    <p>${player1.winRatio.label}</p>
+                    <p>${player1.winRatio.displayValue}</p>
+                    <div class="progressbar">
+                        <div class="progress" style="width: ${100 - +player1.winRatio.percentile}%;"></div>
+                    </div>
+                </div>
+                <div class="kills">
+                    <p>${player1.kills.label}</p>
+                    <p>${player1.kills.displayValue}</p>
+                    <div class="progressbar">
+                        <div class="progress" style="width: ${100 - +player1.kills.percentile}%;"></div>
+                    </div>
+                </div>
+                <div class="kd">
+                    <p>${player1.kd.label}</p>
+                    <p>${player1.kd.displayValue}</p>
+                    <div class="progressbar">
+                        <div class="progress" style="width: ${100 - +player1.kd.percentile}%;"></div>
+                    </div>
+                </div>
+                <div class="minutesPlayed">
+                    <p>${player1.minutesPlayed.label}</p>
+                    <p>${player1.minutesPlayed.displayValue}</p>
+                    <div class="progressbar">
+                        <div class="progress" style="width: ${100 - +player1.minutesPlayed.percentile}%;"></div>
+                    </div>
                 </div>
             </div>
-            <div class="winRatio">
-                <p>${player1.winRatio.label}</p>
-                <p>${player1.winRatio.displayValue}</p>
-                <div class="progressbar">
-                    <div class="progress" style="width: ${100 - +player1.winRatio.percentile}%;"></div>
+
+            <div class="player2compare">
+                <div class="wins">
+                    <div class="progressbar">
+                        <div class="progress" style="width: ${100 - +player2.top1.percentile}%;"></div>
+                    </div>
+                    <p>${player2.top1.label}</p>
+                    <p>${player2.top1.displayValue}</p>
+                </div>
+                <div class="winRatio">
+                    <div class="progressbar">
+                        <div class="progress" style="width: ${100 - +player2.winRatio.percentile}%;"></div>
+                    </div>
+                    <p>${player2.winRatio.label}</p>
+                    <p>${player2.winRatio.displayValue}</p>
+                </div>
+                <div class="kills">
+                    <div class="progressbar">
+                        <div class="progress" style="width: ${100 - +player2.kills.percentile}%;"></div>
+                    </div>
+                    <p>${player2.kills.label}</p>
+                    <p>${player2.kills.displayValue}</p>
+                </div>
+                <div class="kd">
+                    <div class="progressbar">
+                        <div class="progress" style="width: ${100 - +player2.kd.percentile}%;"></div>
+                    </div>
+                    <p>${player2.kd.label}</p>
+                    <p>${player2.kd.displayValue}</p>
+                </div>
+                <div class="minutesPlayed">
+                    <div class="progressbar">
+                        <div class="progress" style="width: ${100 - +player2.minutesPlayed.percentile}%;"></div>
+                    </div>
+                    <p>${player2.minutesPlayed.label}</p>
+                    <p>${player2.minutesPlayed.displayValue}</p>
                 </div>
             </div>
-            <div class="kills">
-                <p>${player1.kills.label}</p>
-                <p>${player1.kills.displayValue}</p>
-                <div class="progressbar">
-                    <div class="progress" style="width: ${100 - +player1.kills.percentile}%;"></div>
-                </div>
-            </div>
-            <div class="kd">
-                <p>${player1.kd.label}</p>
-                <p>${player1.kd.displayValue}</p>
-                <div class="progressbar">
-                    <div class="progress" style="width: ${100 - +player1.kd.percentile}%;"></div>
-                </div>
-            </div>
-            <div class="minutesPlayed">
-                <p>${player1.minutesPlayed.label}</p>
-                <p>${player1.minutesPlayed.displayValue}</p>
-                <div class="progressbar">
-                    <div class="progress" style="width: ${100 - +player1.minutesPlayed.percentile}%;"></div>
-                </div>
-            </div>
-        </div>
-    
-        <div class="player2compare">
-            <div class="wins">
-                <div class="progressbar">
-                    <div class="progress" style="width: ${100 - +player2.top1.percentile}%;"></div>
-                </div>
-                <p>${player2.top1.label}</p>
-                <p>${player2.top1.displayValue}</p>
-            </div>
-            <div class="winRatio">
-                <div class="progressbar">
-                    <div class="progress" style="width: ${100 - +player2.winRatio.percentile}%;"></div>
-                </div>
-                <p>${player2.winRatio.label}</p>
-                <p>${player2.winRatio.displayValue}</p>
-            </div>
-            <div class="kills">
-                <div class="progressbar">
-                    <div class="progress" style="width: ${100 - +player2.kills.percentile}%;"></div>
-                </div>
-                <p>${player2.kills.label}</p>
-                <p>${player2.kills.displayValue}</p>
-            </div>
-            <div class="kd">
-                <div class="progressbar">
-                    <div class="progress" style="width: ${100 - +player2.kd.percentile}%;"></div>
-                </div>
-                <p>${player2.kd.label}</p>
-                <p>${player2.kd.displayValue}</p>
-            </div>
-            <div class="minutesPlayed">
-                <div class="progressbar">
-                    <div class="progress" style="width: ${100 - +player2.minutesPlayed.percentile}%;"></div>
-                </div>
-                <p>${player2.minutesPlayed.label}</p>
-                <p>${player2.minutesPlayed.displayValue}</p>
+            <div class="player2compareLabel">
+                <span class="compareName">${bothPlayersArray[0][1].epicUserHandle}</span>
+                <span class="matches">${player2.matches.label}: ${player2.matches.displayValue}</span>
             </div>
         </div>
     `;
@@ -261,6 +282,8 @@ function loadingScreen(){
           document.getElementById('containerForPlayersLifetimeStats');
     const containerForComparePLayerStats = 
           document.getElementById('containerForComparePLayerStats');
+    const sortBy = 
+          document.getElementById('sortBy');
     
     let loading = `
     <div class="loadingSpinner"></div>
@@ -268,6 +291,7 @@ function loadingScreen(){
     let clear = '';
     containerForPlayersLifetimeStats.innerHTML = loading;
     containerForComparePLayerStats.innerHTML = clear;
+    sortBy.innerHTML = clear;
 }
 
 //Change background based on screen width and height
