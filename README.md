@@ -27,3 +27,13 @@ och testade att använda grid vilket funka väldigt bra.
 
 Om mer tid fanns skulle jag vilja spara alla personer som skriver in sina användarnamn i en databas 
 så att jag skulle kunna göra en egen leaderbord. 
+
+
+
+Spelare fortnite:
+
+ziper240  ---- pc
+marzzonjr ---- ps4
+marzzon_ ---- ps4
+Dark ----- pc
+ogjv ----- xbox one

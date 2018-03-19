@@ -1,16 +1,18 @@
 var url = `https://cors-anywhere.herokuapp.com/https://api.fortnitetracker.com/v1/profile/`;
 var mykey = apiKey.MY_KEY;
+compareButton();
+checkScreenForbackgroundImg();
 
-var compareButton = document.getElementById("compareButton");
-compareButton.onclick = function() {
-    compareButton.disabled = true;
-    setTimeout(function() {
-        compareButton.disabled = false;
-    }, 5000);
-    getTwoPlayersAndURL();
-};
-//document.getElementById('compareButton').addEventListener('click', getTwoPlayersAndURL);
-
+function compareButton(){
+    var compareButton = document.getElementById("compareButton");
+        compareButton.onclick = function() {
+            compareButton.disabled = true;
+            setTimeout(function() {
+                compareButton.disabled = false;
+            }, 5000);
+        getTwoPlayersAndURL();
+    };
+}
 //get API for the fetch request from input fields + url
 function getTwoPlayersAndURL(){
     
@@ -46,6 +48,7 @@ function fetchStats(player1URL, player2URL) {
     Promise.all(comparePlayers)
         .then((bothPlayers) => {
             bothPlayersArray = [];
+        console.log(bothPlayersArray);
             bothPlayersArray.push(bothPlayers);
             listPlayersLifetimeStats();
             comparePLayerStats();
@@ -219,10 +222,10 @@ function comparePLayerStats(gameMode){
                     </div>
                 </div>
                 <div class="minutesPlayed">
-                    <p>${player1.minutesPlayed.label}</p>
-                    <p>${player1.minutesPlayed.displayValue}</p>
+                    <p>${player1.avgTimePlayed.label}</p>
+                    <p>${player1.avgTimePlayed.displayValue}</p>
                     <div class="progressbar">
-                        <div class="progress" style="width: ${100 - +player1.minutesPlayed.percentile}%;"></div>
+                        <div class="progress" style="width: ${100 - +player1.avgTimePlayed.percentile}%;"></div>
                     </div>
                 </div>
             </div>
@@ -258,10 +261,10 @@ function comparePLayerStats(gameMode){
                 </div>
                 <div class="minutesPlayed">
                     <div class="progressbar">
-                        <div class="progress" style="width: ${100 - +player2.minutesPlayed.percentile}%;"></div>
+                        <div class="progress" style="width: ${100 - +player2.avgTimePlayed.percentile}%;"></div>
                     </div>
-                    <p>${player2.minutesPlayed.label}</p>
-                    <p>${player2.minutesPlayed.displayValue}</p>
+                    <p>${player2.avgTimePlayed.label}</p>
+                    <p>${player2.avgTimePlayed.displayValue}</p>
                 </div>
             </div>
             <div class="player2compareLabel">
@@ -310,7 +313,6 @@ function checkScreenForbackgroundImg() {
         document.body.classList.add("mobileImg");
     }
 }
-checkScreenForbackgroundImg();
 
 //display an error message for a short time
 function errorMessage(errortext) {
