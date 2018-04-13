@@ -1,85 +1,109 @@
 /* ===========================
    =======   Body    ========= 
    =========================== */
-body{
-    margin:0;
+
+body {
+    margin: 0;
     padding: 0;
     min-height: 100vh;
 }
-.mobileImg{
+
+.mobileImg {
     background-image: url('../images/fortnite_mobile.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0, 0, 0, 0.6);
     background-blend-mode: darken;
 }
-.desktopImg{
+
+.desktopImg {
     background-image: url('../images/fortnite-desktop.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0, 0, 0, 0.6);
     background-blend-mode: darken;
 }
-.headerImage{
+
+.headerImage {
     width: 100%;
 }
-main{
+
+main {
     margin: 0 2% 0 2%;
     width: 96%;
 }
+
 * {
     font-family: 'Luckiest Guy', cursive;
     letter-spacing: 0.5px;
 }
+
 /* ===========================
    =====  Flashmessage  ====== 
    =========================== */
-.flashMessage{
+
+.flashMessage {
     margin: 5px 0 5px 0;
     height: 40px;
 }
-#errormessage{
+
+#errormessage {
     width: 90%;
     padding: 0 2.5% 0 2.5%;
-    margin: 0 0 0 2.5%; 
+    margin: 0 0 0 2.5%;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
     line-height: 40px;
     height: 40px;
     background-color: darkred;
-    color:white;
+    color: white;
     display: none;
 }
+
 .fadeIn {
     -webkit-animation: fadeIn 1000ms;
     animation: fadeIn 1000ms;
     opacity: 1;
- }
+}
+
 .fadeOut {
     -webkit-animation: fadeOut 1000ms;
     animation: fadeOut 1000ms;
     opacity: 0;
- }
+}
+
 @keyframes fadeIn {
-    from {opacity: 0}
-    to {opacity: 1}
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
 }
 
 @keyframes fadeOut {
-    from {opacity: 1}
-    to {opacity: 0}
+    from {
+        opacity: 1
+    }
+    to {
+        opacity: 0
+    }
 }
+
 /* ===========================
    =====  Enter player  ====== 
    =========================== */
-.enterPlayerDiv{
+
+.enterPlayerDiv {
     padding: 2%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 5px;
 }
-input[type=text], select{
-    background-color: rgba(255,255,255,0.5);
+
+input[type=text],
+select {
+    background-color: rgba(255, 255, 255, 0.5);
     width: 100%;
     margin: 8px 0;
     display: inline-block;
@@ -88,16 +112,20 @@ input[type=text], select{
     font-size: 1em;
     box-sizing: border-box;
 }
-.enterPlayer1, .enterPlayer2{
+
+.enterPlayer1,
+.enterPlayer2 {
     text-align: center;
     margin-top: 10px;
 }
-label{
+
+label {
     color: white;
 }
-select{
-    height:30px;
-    line-height:30px;
+
+select {
+    height: 30px;
+    line-height: 30px;
     padding-left: 20px;
     padding-top: 2px;
     -webkit-appearance: none;
@@ -105,21 +133,26 @@ select{
     appearance: none;
     width: 50%;
 }
-input[type=text]{
+
+input[type=text] {
     padding: 16px 20px 10px 20px;
 }
+
 ::placeholder {
     color: white;
 }
 
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color: white;
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: white;
 }
 
-::-ms-input-placeholder { /* Microsoft Edge */
-   color: white;
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: white;
 }
-#compareButton{
+
+#compareButton {
     width: 100%;
     background-color: #ff9800;
     color: white;
@@ -130,6 +163,7 @@ input[type=text]{
     border-radius: 4px;
     cursor: pointer;
 }
+
 #compareButton:hover {
     background-color: #cc7a00;
 }
@@ -137,184 +171,230 @@ input[type=text]{
 /* ===========================
    ====  liftime stats   ===== 
    =========================== */
-#containerForPlayersLifetimeStats{
+
+#containerForPlayersLifetimeStats {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     color: white;
 }
-#containerForPlayersLifetimeStats p{
+
+#containerForPlayersLifetimeStats p {
     font-size: 1em;
 }
-.player1, .player2{ 
-    background-color: rgba(0,0,0,0.5);
+
+.player1,
+.player2 {
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     margin: 1% 0 1% 0;
 }
-.nameAndPlatform{
+
+.nameAndPlatform {
     padding: 28px 0 20px 20px;
     border-bottom: 1px solid white;
 }
-.nameAndPlatform .name{
+
+.nameAndPlatform .name {
     font-size: 2em;
 }
-.lifetimePlacing{
+
+.lifetimePlacing {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     text-align: center;
     border-bottom: 1px solid white;
     margin-top: 10px;
 }
-.lifetimeStats{
+
+.lifetimeStats {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
-.lifetimeStats p{
+
+.lifetimeStats p {
     padding-left: 20px;
 }
+
 /* ===========================
    ===    Loading spinner  === 
    =========================== */
+
 @keyframes donut-spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
-.loadingSpinner{
-  display: inline-block;
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #ff9800;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: donut-spin 1.2s linear infinite;
+
+.loadingSpinner {
+    display: inline-block;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #ff9800;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: donut-spin 1.2s linear infinite;
 }
+
 /* ===========================
    ======   sort By   ========
    =========================== */
-#sortBy{
+
+#sortBy {
     text-align: center;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     margin: 1% 0 1% 0;
 }
-#sortBy select{
-    width: 30%;  
+
+#sortBy select {
+    width: 30%;
 }
-#sortBy span{
+
+#sortBy span {
     color: white;
 }
+
 /* ===========================
    ===  Compare Players  ===== 
    =========================== */
-#containerForComparePLayerStats{
-    background-color: rgba(0,0,0,0.5);
+
+#containerForComparePLayerStats {
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 5px;
     color: white;
 }
-.player1compare, .player2compare{
+
+.player1compare,
+.player2compare {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
 }
-.player2compare{
+
+.player2compare {
     margin-top: 5px;
 }
-.player1compareLabel{
+
+.player1compareLabel {
     padding: 16px 0 10px 10px;
     border-bottom: 1px solid #009688;
 }
-.player2compareLabel{
+
+.player2compareLabel {
     padding: 16px 0 10px 10px;
     border-top: 1px solid #ff9800;
 }
-.player1compareLabel .compareName{
+
+.player1compareLabel .compareName {
     font-size: 1em;
     color: #009688;
 }
-.player2compareLabel .compareName{
+
+.player2compareLabel .compareName {
     font-size: 1em;
     color: #ff9800;
 }
-.player1compareLabel .matches, .player2compareLabel .matches{
+
+.player1compareLabel .matches,
+.player2compareLabel .matches {
     font-size: 0.7em;
 }
-.player1compare p, .player2compare p{
+
+.player1compare p,
+.player2compare p {
     font-size: 0.6em;
 }
-.wins, .winRatio, .kills, .kd, .minutesPlayed{
+
+.wins,
+.winRatio,
+.kills,
+.kd,
+.scorePerMatch {
     text-align: center;
 }
-.progressbar{
+
+.progressbar {
     width: 90%;
-    margin: 0 5% 0 5%; 
+    margin: 0 5% 0 5%;
     height: 5px;
     border: 1px solid grey;
     border-radius: 3px;
 }
-.player1compare div .progress{
+
+.player1compare div .progress {
     height: 5px;
     background: #009688;
 }
-.player2compare div .progress{
+
+.player2compare div .progress {
     height: 5px;
     background: #ff9800;
 }
+
 /* ===========================
    ======   Footer    ======== 
    =========================== */
-footer{
+
+footer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     text-align: center;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     margin: 1% 2% 0 2%;
     width: 96%;
     border-radius: 5px;
 }
-footer a{
-    color:white;
+
+footer a {
+    color: white;
     text-decoration: none;
     padding: 30px 0 30px 0;
     font-family: 'Luckiest Guy', cursive;
 }
+
 /* ===========================
    ==  Desktop and tablet   == 
    =========================== */
+
 @media screen and (min-width: 600px) {
-    main{
+    main {
         margin: auto;
         max-width: 900px;
     }
-    .enterPlayer1, .enterPlayer2{
+    .enterPlayer1,
+    .enterPlayer2 {
         width: 49%;
         float: left;
     }
-    .enterPlayer2{
+    .enterPlayer2 {
         margin-left: 2%;
     }
-    #containerForPlayersLifetimeStats{
+    #containerForPlayersLifetimeStats {
         grid-template-columns: repeat(2, 1fr);
         max-width: 900px;
         margin: auto;
     }
-    .player2{
+    .player2 {
         margin-left: 2%;
     }
-    #sortBy select{
-        width: 20%;  
+    #sortBy select {
+        width: 20%;
     }
-    .player1compareLabel .compareName, .player2compareLabel .compareName{
+    .player1compareLabel .compareName,
+    .player2compareLabel .compareName {
         font-size: 1.5em;
     }
-    .player1compareLabel .matches, .player2compareLabel .matches{
+    .player1compareLabel .matches,
+    .player2compareLabel .matches {
         font-size: 1em;
     }
-    .player1compare p, .player2compare p{
+    .player1compare p,
+    .player2compare p {
         font-size: 1em;
     }
-    footer{
+    footer {
         max-width: 900px;
         margin: auto;
         margin-top: 1%;
